@@ -16,4 +16,6 @@ RUN pip install -v --no-cache-dir ./apex
 
 RUN pip install simpletransformers
 
+RUN pip install transformers
+
 COPY ./app /app

@@ -1,8 +1,9 @@
 from models.item_model import Item
 
+import torch
 import logging
-
 import pandas as pd
+
 from simpletransformers.question_answering import QuestionAnsweringModel, QuestionAnsweringArgs
 
 def answer_question(item: Item):
@@ -72,8 +73,16 @@ def answer_question(item: Item):
     # model_args.early_stopping_patience = 5
     # model_args.evaluate_during_training_steps = 1000
 
+    kwargs ={"reprocess_input_data": False,
+             "fp16":False,
+             "num_train_epochs": 1,
+             "save_steps": 100_000,
+             "logging_steps": 100}
+
+    cuda_available = torch.cuda.is_available()
+
     # Create the QuestionAnsweringModel
-    model = QuestionAnsweringModel('distilbert', 'distilbert-base-uncased-distilled-squad', args=model_args, use_cuda=False)
+    model = QuestionAnsweringModel('distilbert', 'distilbert-base-uncased-distilled-squad', args=model_args, use_cuda=cuda_available)
 
     # model.train_model(train_data, eval_data=eval_data)
 
