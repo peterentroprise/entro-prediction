@@ -2,7 +2,7 @@ steps:
   - id: "docker_build"
     name: "gcr.io/cloud-builders/docker"
     args: ["build", "-t", "us.gcr.io/$PROJECT_ID/entro-prediction", "."]
-    timeout: "2000s"
+    timeout: "10m"
 
   - id: "docker_push"
     name: "gcr.io/cloud-builders/docker"
