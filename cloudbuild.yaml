@@ -2,30 +2,10 @@ steps:
   - id: "docker_build"
     name: "gcr.io/cloud-builders/docker"
     args: ["build", "-t", "us.gcr.io/$PROJECT_ID/entro-prediction", "."]
-    timeout: "10m"
+    timeout: "1200s"
 
   - id: "docker_push"
     name: "gcr.io/cloud-builders/docker"
     args: ["push", "us.gcr.io/$PROJECT_ID/entro-prediction"]
 
-  # - id: "cloud_run_deploy"
-  #   name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
-  #   args:
-  #     [
-  #       "gcloud",
-  #       "run",
-  #       "deploy",
-  #       "entro-prediction-$BRANCH_NAME",
-  #       "--image=us.gcr.io/$PROJECT_ID/entro-prediction:latest",
-  #       "--cpu=2",
-  #       "--port=80",
-  #       "--memory=2048Mi",
-  #       "--timeout=600",
-  #       "--concurrency=20",
-  #       "--platform=managed",
-  #       "--max-instances=1000",
-  #       "--region=us-central1",
-  #       "--allow-unauthenticated",
-  #       "--revision-suffix=$SHORT_SHA",
-  #       "--set-env-vars=PROJECT_ID=$PROJECT_ID,SHORT_SHA=$SHORT_SHA",
-  #     ]
+timeout: 1200s
