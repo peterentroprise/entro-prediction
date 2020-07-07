@@ -1,0 +1,11 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: entro-prediction-ingress
+  annotations:
+    kubernetes.io/ingress.global-static-ip-name: entro-prediction-address
+    networking.gke.io/managed-certificates: entro-prediction-certificate
+spec:
+  backend:
+    serviceName: entro-prediction
+    servicePort: 80

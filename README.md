@@ -14,3 +14,7 @@ uvicorn main:app --reload
 
 #prod
 gunicorn main:app -c gunicorn_config.py
+
+# deployment
+
+kubectl apply -f certificate.yaml
