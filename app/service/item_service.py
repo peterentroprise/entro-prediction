@@ -65,6 +65,7 @@ def answer_question(item: Item):
     model_args = QuestionAnsweringArgs()
     model_args.num_train_epochs = 5
     model_args.reprocess_input_data = True
+    model_args.no_cache = True
     model_args.overwrite_output_dir = True
     # model_args.use_early_stopping = True
     # model_args.early_stopping_delta = 0.01
@@ -82,7 +83,7 @@ def answer_question(item: Item):
     cuda_available = torch.cuda.is_available()
 
     # Create the QuestionAnsweringModel
-    model = QuestionAnsweringModel('distilbert', 'distilbert-base-uncased-distilled-squad', args=model_args, use_cuda=cuda_available)
+    model = QuestionAnsweringModel('longformer', 'outputs/', args=model_args, use_cuda=cuda_available)
 
     # model.train_model(train_data, eval_data=eval_data)
 
