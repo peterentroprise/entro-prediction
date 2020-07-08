@@ -83,7 +83,7 @@ def answer_question(item: Item):
     cuda_available = torch.cuda.is_available()
 
     # Create the QuestionAnsweringModel
-    model = QuestionAnsweringModel('longformer', 'outputs/', args=model_args, use_cuda=cuda_available)
+    model = QuestionAnsweringModel('longformer', 'outputs/longformer-large-4096-finetuned-triviaqa/', args=model_args, use_cuda=cuda_available)
 
     # model.train_model(train_data, eval_data=eval_data)
 

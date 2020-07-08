@@ -1,4 +1,12 @@
 steps:
+  - name: gcr.io/cloud-builders/gcloud
+    entrypoint: "bash"
+    args:
+        - "-c"
+        - |
+            gcloud components update
+            gcloud beta secrets versions access --secret=entro-production-docker-gcloud latest > service-account.json
+
   - id: "docker_build"
     name: "gcr.io/cloud-builders/docker"
     args: ["build", "-t", "us.gcr.io/$PROJECT_ID/entro-prediction", "."]

@@ -31,6 +31,6 @@ RUN gcloud auth activate-service-account --key-file=${GOOGLE_APPLICATION_CREDENT
 COPY ./app/outputs /app/outputs
 
 # Copy model to outputs/
-RUN gsutil cp -R gs://entro-prediction-models /app/outputs
+RUN gsutil cp -R gs://entro-prediction-models/longformer-large-4096-finetuned-triviaqa /app/outputs
 
 COPY ./app /app

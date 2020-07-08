@@ -18,3 +18,7 @@ gunicorn main:app -c gunicorn_config.py
 # deployment
 
 kubectl apply -f certificate.yaml
+
+# cloudbuild local
+
+cloud-build-local --config=cloudbuild.yaml .
