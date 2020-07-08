@@ -6,6 +6,8 @@ ENV GRACEFUL_TIMEOUT 1000
 
 RUN conda install -c conda-forge fastapi
 
+# simple transformers
+
 RUN conda install pandas tqdm
 
 RUN conda install pytorch cudatoolkit=10.1 -c pytorch
@@ -17,6 +19,14 @@ RUN pip install -v --no-cache-dir ./apex
 RUN pip install simpletransformers
 
 RUN pip install transformers
+
+# haystack
+
+# RUN pip install git+https://github.com/deepset-ai/haystack.git
+
+# RUN pip install farm-haystack
+
+#gcloud storage
 
 RUN echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] http://packages.cloud.google.com/apt cloud-sdk main" | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list && curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key --keyring /usr/share/keyrings/cloud.google.gpg  add - && apt-get update -y && apt-get install google-cloud-sdk -y
 
