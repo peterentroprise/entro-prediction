@@ -36,11 +36,7 @@ ENV GOOGLE_APPLICATION_CREDENTIALS="service-account.json"
 
 RUN gcloud auth activate-service-account --key-file=${GOOGLE_APPLICATION_CREDENTIALS}
 
-# Copy blank outputs/ folder for a target.
-
-COPY ./app/outputs /app/outputs
-
 # Copy model to outputs/
-RUN gsutil cp -R gs://entro-prediction-models/longformer-large-4096-finetuned-triviaqa /app/outputs
+RUN gsutil cp -R gs://entro-prediction-models/longformer-large-4096-finetuned-triviaqa /app
 
 COPY ./app /app
