@@ -1,3 +1,4 @@
+---
 apiVersion: "apps/v1"
 kind: "Deployment"
 metadata:
@@ -27,3 +28,24 @@ spec:
           httpGet:
             path: /healthz
             port: 8080         
+# ---
+# apiVersion: "autoscaling/v2beta1"
+# kind: "HorizontalPodAutoscaler"
+# metadata:
+#   name: "entro-prediction-hpa-ncvz"
+#   namespace: "default"
+#   labels:
+#     app: "entro-prediction"
+# spec:
+#   scaleTargetRef:
+#     kind: "Deployment"
+#     name: "entro-prediction"
+#     apiVersion: "apps/v1"
+#   minReplicas: 1
+#   maxReplicas: 1
+#   metrics:
+#   - type: "Resource"
+#     resource:
+#       name: "cpu"
+#       targetAverageUtilization: 100
+

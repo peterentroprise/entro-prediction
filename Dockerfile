@@ -1,7 +1,6 @@
 FROM  nvidia/cuda:10.1-runtime
 
 WORKDIR /home/user
-
 RUN apt-get update && apt-get install -y python3.7 python3.7-dev python3.7-distutils python3-pip wget curl git
 
 # Set default Python version
