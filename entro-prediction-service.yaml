@@ -1,12 +1,18 @@
-apiVersion: v1
-kind: Service
-metadata:
-  name: entro-prediction-service
-spec:
-  selector:
-    app: entro-prediction
-  type: NodePort
-  ports:
-    - protocol: TCP
-      port: 80
-      targetPort: 80
+---
+    apiVersion: "v1"
+    kind: "Service"
+    metadata:
+      name: "entro-prediction-service"
+      namespace: "default"
+      labels:
+        app: "entro-prediction"
+    spec:
+      ports:
+      - protocol: "TCP"
+        port: 80
+        targetPort: 8080
+      selector:
+        app: "entro-prediction"
+      type: "LoadBalancer"
+      loadBalancerIP: ""
+  

@@ -1,5 +1,0 @@
-name: app
-channels:
-  - conda-forge
-  - defaults
-prefix: C:\Users\arnol\miniconda3\envs\app

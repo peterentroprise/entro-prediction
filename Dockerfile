@@ -1,42 +1,30 @@
-FROM tiangolo/uvicorn-gunicorn-machine-learning:python3.7
+FROM python:3.7.4-stretch
 
-ENV TIMEOUT 1000
+WORKDIR /home/user
 
-ENV GRACEFUL_TIMEOUT 1000
+# install as a package
+COPY setup.py requirements.txt /home/user/
+RUN pip install -r requirements.txt
+RUN pip install -e .
 
-RUN conda install -c conda-forge fastapi
+# install PDF reader
 
-# simple transformers
+RUN wget --no-check-certificate https://dl.xpdfreader.com/xpdf-tools-linux-4.02.tar.gz && tar -xvf xpdf-tools-linux-4.02.tar.gz && cp xpdf-tools-linux-4.02/bin64/pdftotext /usr/local/bin
 
-RUN conda install pandas tqdm
+# copy code
+COPY haystack /home/user/haystack
+COPY rest_api /home/user/rest_api
 
-RUN conda install pytorch cudatoolkit=10.1 -c pytorch
+# copy saved FARM models
+COPY models* /home/user/models/
 
-RUN git clone https://github.com/NVIDIA/apex
+# optional : copy sqlite db if needed for testing
+#COPY qa.db /home/user/
 
-RUN pip install -v --no-cache-dir ./apex
+# optional: copy data directory containing docs for indexing
+#COPY data /home/user/data
 
-RUN pip install simpletransformers
+EXPOSE 8000
 
-RUN pip install transformers
-
-# haystack
-
-# RUN pip install git+https://github.com/deepset-ai/haystack.git
-
-# RUN pip install farm-haystack
-
-#gcloud storage
-
-RUN echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] http://packages.cloud.google.com/apt cloud-sdk main" | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list && curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key --keyring /usr/share/keyrings/cloud.google.gpg  add - && apt-get update -y && apt-get install google-cloud-sdk -y
-
-COPY ./service-account.json /app
-
-ENV GOOGLE_APPLICATION_CREDENTIALS="service-account.json"
-
-RUN gcloud auth activate-service-account --key-file=${GOOGLE_APPLICATION_CREDENTIALS}
-
-# Copy model to outputs/
-RUN gsutil cp -R gs://entro-prediction-models/longformer-large-4096-finetuned-triviaqa /app
-
-COPY ./app /app
+# cmd for running the API
+CMD ["gunicorn", "rest_api.application:app",  "-b", "0.0.0.0", "-k", "uvicorn.workers.UvicornWorker", "--workers", "2", "--timeout", "180"]

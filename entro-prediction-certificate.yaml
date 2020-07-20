@@ -4,4 +4,4 @@ metadata:
   name: entro-prediction-certificate
 spec:
   domains:
-    - entroprise.dev
+    - prediction.entroprise.com

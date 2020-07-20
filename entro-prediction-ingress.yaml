@@ -7,5 +7,5 @@ metadata:
     networking.gke.io/managed-certificates: entro-prediction-certificate
 spec:
   backend:
-    serviceName: entro-prediction
+    serviceName: entro-prediction-service
     servicePort: 80
