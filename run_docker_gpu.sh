@@ -1,5 +1,5 @@
 # Build the image
-docker build .
+# docker build .
 
 # Run the image
-docker run --gpus all -e READER_MODEL_PATH=deepset/roberta-base-squad2 -d entroprediction:latest
+docker run --expose 8080 --gpus all -e READER_MODEL_PATH=deepset/roberta-base-squad2 -d entroprediction:latest

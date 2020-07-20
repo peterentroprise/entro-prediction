@@ -29,6 +29,7 @@ COPY rest_api /home/user/rest_api
 # Optional: copy data directory containing docs for indexing
 #COPY data /home/user/data
 
+ENV PORT 8080
 EXPOSE 8080
 
 ENV LC_ALL=C.UTF-8
