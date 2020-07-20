@@ -36,4 +36,4 @@ ENV LC_ALL=C.UTF-8
 ENV LANG=C.UTF-8
 
 # cmd for running the API
-CMD ["gunicorn", "rest_api.application:app", "-b", "0.0.0.0", "-k", "uvicorn.workers.UvicornWorker", "--workers", "1", "--timeout", "180"]
+CMD ["gunicorn", "rest_api.application:app", "-b", "0.0.0.0:8080", "-k", "uvicorn.workers.UvicornWorker", "--workers", "1", "--timeout", "180"]
