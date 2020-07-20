@@ -8,17 +8,17 @@ RUN apt-get update && apt-get install -y python3.7 python3.7-dev python3.7-distu
 RUN update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.7 1
 RUN update-alternatives --set python3 /usr/bin/python3.7
 
-# copy code
-COPY haystack /home/user/haystack
-COPY rest_api /home/user/rest_api
-
-# install pdf reader
-RUN wget --no-check-certificate https://dl.xpdfreader.com/xpdf-tools-linux-4.02.tar.gz && tar -xvf xpdf-tools-linux-4.02.tar.gz && cp xpdf-tools-linux-4.02/bin64/pdftotext /usr/local/bin
-
 # install as a package
 COPY setup.py requirements.txt /home/user/
 RUN pip3 install -r requirements.txt
 RUN pip3 install -e .
+
+# install pdf reader
+RUN wget --no-check-certificate https://dl.xpdfreader.com/xpdf-tools-linux-4.02.tar.gz && tar -xvf xpdf-tools-linux-4.02.tar.gz && cp xpdf-tools-linux-4.02/bin64/pdftotext /usr/local/bin
+
+# copy code
+COPY haystack /home/user/haystack
+COPY rest_api /home/user/rest_api
 
 # copy saved FARM models
 # COPY models* /home/user/models/
@@ -34,6 +34,5 @@ EXPOSE 8080
 ENV LC_ALL=C.UTF-8
 ENV LANG=C.UTF-8
 
-
 # cmd for running the API
-CMD ["gunicorn", "haystack.api.application:app", "-b", "0.0.0.0", "-k", "uvicorn.workers.UvicornWorker", "--workers", "1", "--timeout", "180"]
+CMD ["gunicorn", "rest_api.application:app", "-b", "0.0.0.0", "-k", "uvicorn.workers.UvicornWorker", "--workers", "1", "--timeout", "180"]

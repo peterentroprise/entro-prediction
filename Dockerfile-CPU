@@ -24,7 +24,7 @@ COPY rest_api /home/user/rest_api
 # optional: copy data directory containing docs for indexing
 #COPY data /home/user/data
 
-EXPOSE 8000
+EXPOSE 8080
 
 # cmd for running the API
-CMD ["gunicorn", "rest_api.application:app",  "-b", "0.0.0.0", "-k", "uvicorn.workers.UvicornWorker", "--workers", "2", "--timeout", "180"]
+CMD ["gunicorn", "rest_api.application:app",  "-b", "0.0.0.0", "-k", "uvicorn.workers.UvicornWorker", "--workers", "1", "--timeout", "180"]

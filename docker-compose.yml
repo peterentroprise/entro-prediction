@@ -3,7 +3,7 @@ services:
   haystack-api:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile-CPU
     image: "entro-prediction:latest"
     ports:
       - 8080:8080
@@ -16,7 +16,7 @@ services:
       - DB_PORT=9200
       - DB_USER=elastic
       - DB_PW=qt5hfjmkmxtvlf4pw6qhlk6b
-      - USE_GPU=True
+      - USE_GPU=False
       # Load a model from transformers' model hub or a local path into the FARMReader.
       - READER_MODEL_PATH=deepset/roberta-base-squad2
       # - READER_MODEL_PATH=home/user/models/roberta-base-squad2
