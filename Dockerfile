@@ -36,4 +36,4 @@ ENV LANG=C.UTF-8
 
 
 # cmd for running the API
-CMD ["gunicorn", "haystack.api.application:app", "-b", "0.0.0.0", "-k", "uvicorn.workers.UvicornWorker", "--workers", "2", "--timeout", "180"]
+CMD ["gunicorn", "haystack.api.application:app", "-b", "0.0.0.0", "-k", "uvicorn.workers.UvicornWorker", "--workers", "1", "--timeout", "180"]
