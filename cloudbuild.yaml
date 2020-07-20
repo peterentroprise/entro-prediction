@@ -17,4 +17,12 @@ steps:
     args: ["push", "us.gcr.io/$PROJECT_ID/entro-prediction"]
     timeout: "2000s"
 
+  - name: "gcr.io/cloud-builders/gke-deploy"
+    args:
+    - run
+    - --filename=entro-prediction-deployment.yaml
+    - --image=us.gcr.io/$PROJECT_ID/entro-prediction
+    - --location=us-central1-c
+    - --cluster=prod-cluster
+
 timeout: 2000s
