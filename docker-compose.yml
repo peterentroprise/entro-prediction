@@ -4,9 +4,9 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: "deepset/haystack-cpu:latest"
+    image: "deepset/haystack-gpu:latest"
     ports:
-      - 8000:8000
+      - 8080:8080
     volumes:
       # Optional: mount your own models from disk into the container
       - "./models:/home/user/models"
@@ -16,7 +16,7 @@ services:
       - DB_PORT=9200
       - DB_USER=elastic
       - DB_PW=qt5hfjmkmxtvlf4pw6qhlk6b
-      - USE_GPU=False
+      - USE_GPU=True
       # Load a model from transformers' model hub or a local path into the FARMReader.
       - READER_MODEL_PATH=deepset/roberta-base-squad2
       # - READER_MODEL_PATH=home/user/models/roberta-base-squad2
