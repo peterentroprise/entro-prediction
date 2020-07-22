@@ -1,9 +1,9 @@
-version: '3'
+version: "3"
 services:
   haystack-api:
     build:
       context: .
-      dockerfile: Dockerfile-CPU
+      dockerfile: Dockerfile.CPU
     image: "entro-prediction:latest"
     ports:
       - 8080:8080
@@ -25,4 +25,4 @@ services:
       # - READER_MODEL_PATH=/home/user/models/roberta-base-squad2
       # - READER_TOKENIZER=/home/user/models/roberta-base-squad2
     restart: always
-    command: "/bin/bash -c 'sleep 15 && gunicorn rest_api.application:app -b 0.0.0.0 -k uvicorn.workers.UvicornWorker --workers 1 --timeout 180'"
+    command: "/bin/bash -c 'sleep 15 && gunicorn rest_api.application:app -b 0.0.0.0:8080 -k uvicorn.workers.UvicornWorker --workers 1 --timeout 180'"
