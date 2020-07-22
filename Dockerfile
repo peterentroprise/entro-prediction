@@ -13,7 +13,9 @@ RUN pip3 install -r requirements.txt
 RUN pip3 install -e .
 
 # install pdf reader
-RUN wget --no-check-certificate https://dl.xpdfreader.com/xpdf-tools-linux-4.02.tar.gz && tar -xvf xpdf-tools-linux-4.02.tar.gz && cp xpdf-tools-linux-4.02/bin64/pdftotext /usr/local/bin
+RUN wget --no-check-certificate https://dl.xpdfreader.com/xpdf-tools-linux-4.02.tar.gz
+RUN tar -xvf xpdf-tools-linux-4.02.tar.gz && cp xpdf-tools-linux-4.02/bin64/pdftotext /usr/local/bin
+RUN cp xpdf-tools-linux-4.02/bin64/pdftotext /usr/local/bin
 
 # copy code
 COPY haystack /home/user/haystack
