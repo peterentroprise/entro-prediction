@@ -10,6 +10,8 @@ services:
     volumes:
       # Optional: mount your own models from disk into the container
       - "./models:/home/user/models"
+      - "./rest_api:/home/user/rest_api"
+      - "./haystack:/home/user/haystack"
     environment:
       # See rest_api/config.py for more variables that you can configure here.
       - DB_HOST=35.188.203.27
@@ -25,4 +27,16 @@ services:
       # - READER_MODEL_PATH=/home/user/models/roberta-base-squad2
       # - READER_TOKENIZER=/home/user/models/roberta-base-squad2
     restart: always
-    command: "/bin/bash -c 'sleep 15 && gunicorn rest_api.application:app -b 0.0.0.0:8080 -k uvicorn.workers.UvicornWorker --workers 1 --timeout 180'"
+    # command: "/bin/bash -c 'sleep 15 && gunicorn rest_api.application:app -b 0.0.0.0:8080 -k uvicorn.workers.UvicornWorker --workers 1 --timeout 180'"
+    command:
+      [
+        "uvicorn",
+        "rest_api.application:app",
+        "--host",
+        "0.0.0.0",
+        "--debug",
+        "--port",
+        "8080",
+        "--reload-dir",
+        "rest_api",
+      ]
