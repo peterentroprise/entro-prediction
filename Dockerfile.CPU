@@ -16,7 +16,7 @@ COPY haystack /home/user/haystack
 COPY rest_api /home/user/rest_api
 
 # copy saved FARM models
-COPY models* /home/user/models/
+# COPY models* /home/user/models/
 
 # optional : copy sqlite db if needed for testing
 #COPY qa.db /home/user/
