@@ -20,7 +20,7 @@ from haystack.reader.farm import FARMReader
 from haystack.reader.transformers import TransformersReader
 from haystack.retriever.base import BaseRetriever
 from haystack.retriever.sparse import ElasticsearchRetriever, ElasticsearchFilterOnlyRetriever
-from haystack.retriever.dense import EmbeddingRetriever
+from haystack.retriever.dense import EmbeddingRetriever, DensePassageRetriever
 
 logger = logging.getLogger(__name__)
 router = APIRouter()
@@ -53,6 +53,13 @@ if RETRIEVER_TYPE == "EmbeddingRetriever":
     )  # type: BaseRetriever
 elif RETRIEVER_TYPE == "ElasticsearchRetriever":
     retriever = ElasticsearchRetriever(document_store=document_store)
+elif RETRIEVER_TYPE == "DensePassageRetriever":
+    retriever = DensePassageRetriever(
+        document_store=document_store,
+        embedding_model=EMBEDDING_MODEL_PATH,
+        do_lower_case=True,
+        use_gpu=USE_GPU
+    )
 elif RETRIEVER_TYPE is None or RETRIEVER_TYPE == "ElasticsearchFilterOnlyRetriever":
     retriever = ElasticsearchFilterOnlyRetriever(document_store=document_store)
 else:
@@ -132,6 +139,37 @@ class Answers(BaseModel):
 # Endpoints
 #############################################
 doc_qa_limiter = RequestLimiter(CONCURRENT_REQUEST_PER_WORKER)
+
+@router.post("/models/{model_id}/doc-qa-dpr", response_model_exclude_unset=True)
+def doc_qa(model_id: int, request: Question):
+    with doc_qa_limiter.run():
+        start_time = time.time()
+
+        finder = FINDERS.get(model_id, None)
+
+        results = []
+        for question in request.questions:
+            if request.filters:
+                filters = {key: [value] for key, value in request.filters.items() if value is not None}
+                logger.info(f" [{datetime.now()}] Request: {request}")
+            else:
+                filters = {}
+
+            result = finder.get_answers(
+                question=question,
+                top_k_retriever=request.top_k_retriever,
+                top_k_reader=request.top_k_reader,
+                filters=filters,
+            )
+            print(result)
+            results.append(result)
+        
+        print(results)
+        elasticapm.set_custom_context({"results": results})
+        end_time = time.time()
+        logger.info({"request": request.json(), "results": results, "time": f"{(end_time - start_time):.2f}"})
+
+        return {"results": results}
 
 @router.post("/models/{model_id}/doc-qa", response_model=Answers, response_model_exclude_unset=True)
 def doc_qa(model_id: int, request: Question):

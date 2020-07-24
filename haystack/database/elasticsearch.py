@@ -277,9 +277,15 @@ class ElasticsearchDocumentStore(BaseDocumentStore):
                 body["_source"] = {"excludes": self.excluded_meta_data}
 
             logger.debug(f"Retriever query: {body}")
+            print(body)
             result = self.client.search(index=index, body=body)["hits"]["hits"]
 
+            
+
             documents = [self._convert_es_hit_to_document(hit, score_adjustment=-1) for hit in result]
+
+            
+
             return documents
 
     def _convert_es_hit_to_document(self, hit: dict, score_adjustment: int = 0) -> Document:

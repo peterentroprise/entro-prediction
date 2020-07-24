@@ -17,7 +17,7 @@ COPY haystack /home/user/haystack
 COPY rest_api /home/user/rest_api
 
 # copy saved FARM models
-# COPY models* /home/user/models/
+COPY models* /home/user/models/
 
 # Optional: copy data directory containing docs for indexing
 #COPY data /home/user/data

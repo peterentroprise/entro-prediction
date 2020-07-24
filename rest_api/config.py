@@ -16,14 +16,14 @@ DB_HOST = os.getenv("DB_HOST", "35.188.203.27")
 DB_PORT = int(os.getenv("DB_PORT", 9200))
 DB_USER = os.getenv("DB_USER", "elastic")
 DB_PW = os.getenv("DB_PW", "qt5hfjmkmxtvlf4pw6qhlk6b")
-DB_INDEX = os.getenv("DB_INDEX", "document")
+DB_INDEX = os.getenv("DB_INDEX", "content")
 DB_INDEX_FEEDBACK = os.getenv("DB_INDEX_FEEDBACK", "feedback")
 ES_CONN_SCHEME = os.getenv("ES_CONN_SCHEME", "http")
 TEXT_FIELD_NAME = os.getenv("TEXT_FIELD_NAME", "text")
 SEARCH_FIELD_NAME = os.getenv("SEARCH_FIELD_NAME", "text")
 FAQ_QUESTION_FIELD_NAME = os.getenv("FAQ_QUESTION_FIELD_NAME", "question")
-EMBEDDING_FIELD_NAME = os.getenv("EMBEDDING_FIELD_NAME", None)
-EMBEDDING_DIM = os.getenv("EMBEDDING_DIM", None)
+EMBEDDING_FIELD_NAME = os.getenv("EMBEDDING_FIELD_NAME", "embedding")
+EMBEDDING_DIM = os.getenv("EMBEDDING_DIM", 768)
 
 # Reader
 READER_MODEL_PATH = os.getenv("READER_MODEL_PATH", "deepset/roberta-base-squad2")
@@ -37,12 +37,12 @@ DOC_STRIDE = int(os.getenv("DOC_STRIDE", 128))
 MAX_SEQ_LEN = int(os.getenv("MAX_SEQ_LEN", 256))
 
 # Retriever
-RETRIEVER_TYPE = os.getenv("RETRIEVER_TYPE", "ElasticsearchRetriever") # alternatives: 'EmbeddingRetriever', 'ElasticsearchRetriever', 'ElasticsearchFilterOnlyRetriever', None
+RETRIEVER_TYPE = os.getenv("RETRIEVER_TYPE", "DensePassageRetriever") # alternatives: 'EmbeddingRetriever', 'ElasticsearchRetriever', 'ElasticsearchFilterOnlyRetriever', None
 DEFAULT_TOP_K_RETRIEVER = int(os.getenv("DEFAULT_TOP_K_RETRIEVER", 10))
 EXCLUDE_META_DATA_FIELDS = os.getenv("EXCLUDE_META_DATA_FIELDS", None)
 if EXCLUDE_META_DATA_FIELDS:
     EXCLUDE_META_DATA_FIELDS = ast.literal_eval(EXCLUDE_META_DATA_FIELDS)
-EMBEDDING_MODEL_PATH = os.getenv("EMBEDDING_MODEL_PATH", None)
+EMBEDDING_MODEL_PATH = os.getenv("EMBEDDING_MODEL_PATH", "dpr-bert-base-nq")
 EMBEDDING_MODEL_FORMAT = os.getenv("EMBEDDING_MODEL_FORMAT", "farm")
 
 # File uploads

@@ -13,5 +13,3 @@ logging.getLogger('farm.infer').setLevel(logging.INFO)
 logging.getLogger('transformers').setLevel(logging.WARNING)
 logging.getLogger('farm.eval').setLevel(logging.INFO)
 logging.getLogger('farm.modeling.optimization').setLevel(logging.INFO)
-
-
