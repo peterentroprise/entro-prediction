@@ -22,8 +22,22 @@ elasticsearch_client = Elasticsearch(
 def get_application() -> FastAPI:
     application = FastAPI(title="Haystack-API", debug=True, version="0.1")
 
+    origins = [
+    "https://entroprise.com",
+    "https://www.entroprise.com",
+    "https://hasura.entroprise.com",
+    "https://app.entroprise.com"
+    "http://app.entroprise.com",
+    "http://entroprise.com",
+    "http://hasura.entroprise.com",
+    "http://localhost",
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+    "http://127.0.0.1",
+]
+
     application.add_middleware(
-        CORSMiddleware, allow_origins=["*"], allow_credentials=True, allow_methods=["*"], allow_headers=["*"],
+        CORSMiddleware, allow_origins=origins, allow_credentials=True, allow_methods=["*"], allow_headers=["*"],
     )
 
     if APM_SERVER:
