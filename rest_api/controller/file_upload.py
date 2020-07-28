@@ -11,10 +11,11 @@ from fastapi import UploadFile, File, Form
 
 from rest_api.config import DB_HOST, DB_PORT, DB_USER, DB_PW, DB_INDEX, ES_CONN_SCHEME, TEXT_FIELD_NAME, \
     SEARCH_FIELD_NAME, FILE_UPLOAD_PATH, EMBEDDING_DIM, EMBEDDING_FIELD_NAME, EXCLUDE_META_DATA_FIELDS, VALID_LANGUAGES, \
-    FAQ_QUESTION_FIELD_NAME, REMOVE_NUMERIC_TABLES, REMOVE_WHITESPACE, REMOVE_EMPTY_LINES, REMOVE_HEADER_FOOTER
+    FAQ_QUESTION_FIELD_NAME, REMOVE_NUMERIC_TABLES, REMOVE_WHITESPACE, REMOVE_EMPTY_LINES, REMOVE_HEADER_FOOTER, EMBEDDING_MODEL_PATH, EMBEDDING_MODEL_FORMAT, USE_GPU, RETRIEVER_TYPE
 from haystack.database.elasticsearch import ElasticsearchDocumentStore
 from haystack.indexing.file_converters.pdf import PDFToTextConverter
 from haystack.indexing.file_converters.txt import TextConverter
+from haystack.retriever.dense import DensePassageRetriever
 
 
 logger = logging.getLogger(__name__)
@@ -40,6 +41,12 @@ document_store = ElasticsearchDocumentStore(
 
 os.makedirs(FILE_UPLOAD_PATH, exist_ok=True)  # create directory for uploading files
 
+retriever = DensePassageRetriever(
+    document_store=document_store,
+    embedding_model=EMBEDDING_MODEL_PATH,
+    do_lower_case=True,
+    use_gpu=USE_GPU
+)
 
 @router.post("/file-upload")
 def upload_file_to_document_store(
