@@ -25,15 +25,17 @@ def get_application() -> FastAPI:
     origins = [
     "https://entroprise.com",
     "https://www.entroprise.com",
-    "https://hasura.entroprise.com",
     "https://app.entroprise.com"
-    "http://app.entroprise.com",
+    "https://hasura.entroprise.com",
     "http://entroprise.com",
+    "http://www.entroprise.com",
+    "http://app.entroprise.com",
     "http://hasura.entroprise.com",
     "http://localhost",
     "http://localhost:3000",
-    "http://127.0.0.1:3000",
     "http://127.0.0.1",
+    "http://127.0.0.1:3000",
+    
 ]
 
     application.add_middleware(
