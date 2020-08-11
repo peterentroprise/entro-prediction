@@ -19,9 +19,9 @@ spec:
       containers:
         - name: "entro-prediction"
           image: "us.gcr.io/entro-production/entro-prediction:latest"
-          # resources:
-          #   limits:
-          #    nvidia.com/gpu: 1
+          resources:
+            limits:
+              nvidia.com/gpu: 1
           ports:
             - containerPort: 8080
           readinessProbe:
